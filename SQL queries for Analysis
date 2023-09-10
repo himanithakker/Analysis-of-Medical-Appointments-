@@ -1,0 +1,101 @@
+Count the number of appointments for each day in the given dataset:
+
+SELECT 
+    AppointmentDay,
+    COUNT(*) as appointment_count
+FROM 
+    `Analysis.Records`
+GROUP BY 
+      AppointmentDay
+ORDER BY 
+    AppointmentDay;
+
+Calculate the average number of appointments(Set to nearest whole number) per day in the given dataset
+
+SELECT 
+    ROUND(AVG(appointment_count)) AS average_appointments_per_day
+FROM (
+    SELECT 
+        AppointmentDay,
+        COUNT(*) AS appointment_count
+    FROM 
+        `Analysis.Records`
+    GROUP BY 
+        AppointmentDay
+) AS subquery;
+
+
+Find the day with the highest number of appointments in the given dataset.
+
+SELECT 
+    AppointmentDay,
+    COUNT(*) AS appointment_count
+FROM 
+    `Analysis.Records`
+GROUP BY 
+    AppointmentDay
+ORDER BY 
+    appointment_count DESC
+LIMIT 1;
+
+
+Calculate the monthly average number of appointments in the given dataset
+
+SELECT
+    EXTRACT(YEAR FROM AppointmentDay) AS year,
+    EXTRACT(MONTH FROM AppointmentDay) AS month,
+    AVG(appointment_count) AS average_appointments_per_month
+FROM (
+    SELECT
+        AppointmentDay,
+        COUNT(*) AS appointment_count
+    FROM
+        `Analysis.Records`
+    GROUP BY
+        AppointmentDay
+) AS subquery
+GROUP BY
+    year, month
+ORDER BY
+    year, month;
+
+
+Find the month with the highest number of appointments in the given dataset
+
+select 
+      EXTRACT(year from AppointmentDay) AS year,
+      EXTRACT (month from AppointmentDay ) AS month, 
+      COUNT (*) AS appointment_count 
+FROM `Analysis.Records`
+
+GROUP BY year, month 
+
+ORDER BY appointment_count DESC 
+
+LIMIT 1 
+
+
+Calculate the weekly average number of appointments in the given datase
+
+SELECT
+    EXTRACT(YEAR FROM AppointmentDay) AS year,
+    EXTRACT(MONTH FROM AppointmentDay) AS month,
+    EXTRACT(WEEK FROM AppointmentDay) AS week,
+    AVG(appointment_count) AS average_appointments_per_week
+FROM (
+    SELECT
+        AppointmentDay,
+        COUNT(*) AS appointment_count
+    FROM
+        `Analysis.Records`
+    GROUP BY
+        AppointmentDay
+) AS subquery
+GROUP BY
+    1, 2, 3
+ORDER BY
+    1, 2, 3;
+
+Find the week with the highest number of appointments in the given dataset
+
+
