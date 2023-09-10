@@ -98,4 +98,22 @@ ORDER BY
 
 Find the week with the highest number of appointments in the given dataset
 
+SELECT
+    EXTRACT(YEAR FROM AppointmentDay) AS year,
+    EXTRACT(WEEK FROM AppointmentDay) AS week,
+    count (*) AS max_apointment 
+FROM 
+    `Analysis.Records`
+    GROUP BY
+        year, week 
+    ORDER BY 
+      max_apointment DESC
+
+What is the distribution of appointments based on gender in the dataset?
+
+SELECT Gender,
+Count (*) AppointmentDay
+from `Analysis.Records`
+
+GROUP BY Gender
 
